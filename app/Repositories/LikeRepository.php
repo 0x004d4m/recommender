@@ -14,14 +14,17 @@ class LikeRepository implements LikeRepositoryInterface
         if ($Like) {
             // If post is liked, unlike the post
             $Like->delete();
-            return false;
+            return true;
         } else {
             // If post is not liked, like the post
-            Like::create([
+            if(Like::create([
                 'user_id' => $userId,
                 'post_id' => $postId
-            ]);
-            return true;
+            ])){
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ class PostService implements PostServiceInterface
 
     public function toggleLikePost($postId, $userId)
     {
-        $this->likeRepository->toggle($postId, $userId);
+        return $this->likeRepository->toggle($postId, $userId);
     }
 
     public function ratePost($postId, $userId, $rate)
