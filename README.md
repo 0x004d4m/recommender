@@ -36,6 +36,7 @@ If you want to run the project using sail run:
   sail up -d
   sail artisan storage:link
   sail artisan migrate:fresh --seed
+  sail npm run dev
 ```
 
 And you are ready to go.
@@ -45,7 +46,7 @@ And you are ready to go.
 If you want to run the project localy first make sure to make .env and copy .env.example to it:
 
 ```bash
-  cp .env.example.local .env
+  cp .env.example .env
 ```
 
 Change Database configration
@@ -57,9 +58,19 @@ Then run:
   php artisan storage:link
   php artisan key:generate
   php artisan migrate:fresh --seed
+  php artisan serve
+  npm run dev
 ```
 
 And you are ready to go.
+
+## Switching from local to docker vice versa?
+
+If you want to switch between running the porject locally and on docker or vice versa dont forget to clear config after editing .env:
+
+```bash
+  php artisan config:clear
+```
 
 ## Admin Credintials
 
