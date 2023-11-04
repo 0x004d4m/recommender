@@ -2,36 +2,33 @@
 
 namespace App\Services;
 
-use App\Contracts\PostServiceContract;
+use App\Contracts\Services\PostServiceInterface;
+use App\Repositories\InteractionRepository;
+use App\Repositories\LikeRepository;
 use App\Repositories\PostRepository;
+use App\Repositories\RateRepository;
 
-class PostService implements PostServiceContract
+class PostService implements PostServiceInterface
 {
-    protected $postRepository;
-
-    public function __construct(PostRepository $postRepository)
+    public function __construct(protected PostRepository $postRepository, protected LikeRepository $likeRepository, protected RateRepository $rateRepository, protected InteractionRepository $interactionRepository)
     {
-        $this->postRepository = $postRepository;
     }
 
-    public function getAllPosts(?int $userId)
+    public function getPosts(?int $userId)
     {
-        return $this->postRepository->all($userId);
+        if ($this->interactionRepository->count($userId) > 5) {
+            return $this->interactionRepository->list($userId);
+        }
+        return $this->postRepository->list();
     }
 
-    public function likePost($postId, $userId)
+    public function toggleLikePost($postId, $userId)
     {
-        return $this->postRepository->toggleLike($postId, $userId);
-    }
-
-    public function savePost($postId, $userId)
-    {
-        return $this->postRepository->toggleSave($postId, $userId);
+        $this->likeRepository->toggle($postId, $userId);
     }
 
     public function ratePost($postId, $userId, $rate)
     {
-        return $this->postRepository->rate($postId, $userId, $rate);
+        return $this->rateRepository->create($postId, $userId, $rate);
     }
 }
-

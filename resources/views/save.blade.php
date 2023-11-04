@@ -1,19 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Recommendation History
+            Saved Posts
         </h2>
     </x-slot>
 
-    @foreach ($recommendations as $recommendation)
-        <div class="py-12">
+    @foreach ($posts as $post)
+        <div class="py-12" id="post_{{ $post->post->id }}">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="pt-6 px-6 pb-2 text-gray-900 dark:text-gray-100">
-                        <b>Created at:</b> {{ $recommendation->created_at }}
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        {{ $post->post->title }}
                     </div>
-                    <div class="py-6 px-6 pt-2 text-gray-900 dark:text-gray-100">
-                        <b>Based on these keywords:</b> {{ $recommendation->recommendation }}
+                    <div class="p-6 text-gray-900 dark:text-gray-100">
+                        {{ $post->post->description }}
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="pagination">
-                {{ $recommendations->links('vendor.pagination.tailwind') }}
+                {{ $posts->links('vendor.pagination.tailwind') }}
             </div>
         </div>
     </div>

@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserRatedPost extends Model
+class Save extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_rated_posts';
+    protected $table = 'saves';
 
     protected $fillable = [
         'user_id',
         'post_id',
-        'rate',
     ];
 
     public function user()

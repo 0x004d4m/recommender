@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserRecommendationHistoryController;
+use App\Http\Controllers\RecommendationsController;
+use App\Http\Controllers\SaveController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,8 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [PostController::class, 'index'])->middleware(['verified'])->name('dashboard');
-    Route::get('/recommendation_history', [UserRecommendationHistoryController::class, 'index'])->name('recommendation_history');
+    Route::get('/recommendation_history', [RecommendationsController::class, 'index'])->name('recommendation_history');
+    Route::get('/saved_posts', [SaveController::class, 'index'])->name('saved_posts');
     Route::group([
         'prefix' => '/profile'
     ], function () {
@@ -31,12 +33,12 @@ Route::middleware('auth')->group(function () {
         Route::delete('/', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
     Route::group([
-        'prefix'=>'/posts'
+        'prefix' => '/posts'
     ], function () {
         Route::post('/{postId}/like', [PostController::class, 'like'])->name('posts.like');
-        Route::post('/{postId}/save', [PostController::class, 'save'])->name('posts.save');
+        Route::post('/{postId}/save', [SaveController::class, 'store'])->name('posts.save');
         Route::post('/{postId}/rate', [PostController::class, 'rate'])->name('posts.rate');
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

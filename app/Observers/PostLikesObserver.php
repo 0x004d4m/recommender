@@ -2,42 +2,22 @@
 
 namespace App\Observers;
 
-use App\Models\{
-    UserInteraction,
-    UserLikedPost
-};
+use App\Models\Like;
+use App\Repositories\InteractionRepository;
 
 class PostLikesObserver
 {
-    public function created(UserLikedPost $postLike)
+    public function __construct(protected InteractionRepository $interactionRepository){}
+
+    public function created(Like $like)
     {
         // Handle the "created" event
-        $this->updateUserInteractions($postLike);
+        return $this->interactionRepository->handleLikeInteraction($like, 'add');
     }
 
-    public function deleted(UserLikedPost $postLike)
+    public function deleted(Like $like)
     {
         // Handle the "deleted" event
-        $this->updateUserInteractions($postLike, 'delete');
-    }
-
-    protected function updateUserInteractions(UserLikedPost $postLike, $action = 'add')
-    {
-        // Fetch or create the UserInteraction instance
-        $interaction = UserInteraction::firstOrCreate(
-            [
-                'user_id' => $postLike->user_id,
-                'post_id' => $postLike->post_id
-            ]
-        );
-
-        // Update interactions count
-        if ($action === 'add') {
-            $interaction->like = true;
-        } elseif ($action === 'delete') {
-            $interaction->like = false;
-        }
-
-        $interaction->save();
+        return $this->interactionRepository->handleLikeInteraction($like, 'delete');
     }
 }

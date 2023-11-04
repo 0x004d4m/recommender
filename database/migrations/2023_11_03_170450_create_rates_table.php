@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_liked_posts', function (Blueprint $table) {
+        Schema::create('rates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts');
+            $table->unsignedTinyInteger('rate');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_liked_posts');
+        Schema::dropIfExists('user_rated_posts');
     }
 };

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_saved_posts', function (Blueprint $table) {
+        Schema::create('recommendations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->constrained()->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('post_id');
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->text('recommendation');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_saved_posts');
+        Schema::dropIfExists('user_recommendation_histories');
     }
 };

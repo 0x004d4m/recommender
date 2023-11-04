@@ -30,6 +30,7 @@ Back-end:
 If you want to run the project using sail run:
 
 ```bash
+  cp .env.example.docker .env
   composer install
   alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
   sail up -d
@@ -44,7 +45,7 @@ And you are ready to go.
 If you want to run the project localy first make sure to make .env and copy .env.example to it:
 
 ```bash
-  cp .env.example .env
+  cp .env.example.local .env
 ```
 
 Change Database configration

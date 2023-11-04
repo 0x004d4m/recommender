@@ -21,6 +21,11 @@
                         Recommendation History
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('saved_posts')" :active="request()->routeIs('saved_posts')">
+                        Saved Posts
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
